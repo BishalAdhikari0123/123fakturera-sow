@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import { 
-  Search, Plus, Printer, ToggleRight, MoreHorizontal
-} from 'lucide-react';
+import { Search, Plus, Printer, ToggleRight, MoreHorizontal } from 'lucide-react';
 import { getPriceList, updateProduct } from '../utils/api';
 
 interface Product {
@@ -18,475 +16,179 @@ interface Product {
   description: string;
 }
 
+type EditableCellProps = {
+  value: string;
+  isEditing: boolean;
+  onClick?: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+};
+
+const EditableCell = ({
+  value,
+  isEditing,
+  onClick,
+  onChange,
+  onBlur,
+  onKeyDown
+}: EditableCellProps) => isEditing ? (
+  <input
+    value={value}
+    onChange={onChange}
+    onBlur={onBlur}
+    onKeyDown={onKeyDown}
+    autoFocus
+  />
+) : (
+  <div onClick={onClick}>{value}</div>
+);
+
 const PriceListPage = () => {
   const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editingField, setEditingField] = useState<string | null>(null);
-  const [editingValue, setEditingValue] = useState<string>('');
+  const [editing, setEditing] = useState<{ id: number | null, field: string | null, value: string }>({ id: null, field: null, value: '' });
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    (async () => {
       try {
-        setLoading(true);
         const data = await getPriceList();
         setProducts(data);
-        setLoading(false);
       } catch (err) {
         console.error('Error fetching products:', err);
         setError('Failed to load products');
+      } finally {
         setLoading(false);
-        
-        // Generate dummy data if API fails
-        const dummyProducts = [];
-        for (let i = 1; i <= 20; i++) {
-          dummyProducts.push({
-            id: i,
-            articleNo: `123456${i.toString().padStart(4, '0')}`,
-            productService: `Product ${i} - Sample description text with sufficient length`,
-            inPrice: ((i * 1000) + 500).toString(),
-            price: ((i * 1500) + 800).toString(),
-            unit: ['pieces', 'hours', 'kilometers', 'meters', 'kilograms'][i % 5],
-            inStock: ((i * 100) + 50).toString(),
-            description: `This is a detailed description for product ${i} with exactly fifty chars!`
-          });
-        }
-        setProducts(dummyProducts);
       }
-    };
-
-    fetchProducts();
+    })();
   }, []);
 
   const startEditing = (id: number, field: string, value: string) => {
-    setEditingId(id);
-    setEditingField(field);
-    setEditingValue(value);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditingValue(e.target.value);
+    setEditing({ id, field, value });
   };
 
   const saveChanges = async () => {
-    if (editingId === null || editingField === null) return;
-    
+    const { id, field, value } = editing;
+    if (id === null || field === null) return;
+
+    const updated = products.map(p => p.id === id ? { ...p, [field]: value } : p);
+    setProducts(updated);
+    setEditing({ id: null, field: null, value: '' });
     try {
-      const productToUpdate = products.find(p => p.id === editingId);
-      if (!productToUpdate) return;
-      
-      const updatedProduct = {
-        ...productToUpdate,
-        [editingField]: editingValue
-      };
-      
-      // In a real implementation, this would call the API
-      await updateProduct(editingId, updatedProduct);
-      
-      // Update local state
-      setProducts(products.map(p => 
-        p.id === editingId ? { ...p, [editingField]: editingValue } : p
-      ));
-      
-      // Reset editing state
-      setEditingId(null);
-      setEditingField(null);
-      setEditingValue('');
+      await updateProduct(id, { [field]: value });
     } catch (err) {
-      console.error('Error updating product:', err);
-      // Simply update local state for demo purposes
-      setProducts(products.map(p => 
-        p.id === editingId ? { ...p, [editingField]: editingValue } : p
-      ));
-      setEditingId(null);
-      setEditingField(null);
+      console.error('Update failed:', err);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      saveChanges();
-    } else if (e.key === 'Escape') {
-      setEditingId(null);
-      setEditingField(null);
-    }
+    if (e.key === 'Enter') saveChanges();
+    else if (e.key === 'Escape') setEditing({ id: null, field: null, value: '' });
   };
 
-  const handleBlur = () => {
-    saveChanges();
+  const addNewProduct = () => {
+    const id = Math.max(0, ...products.map(p => p.id)) + 1;
+    const newProduct: Product = {
+      id,
+      articleNo: `New-${Date.now().toString().slice(-8)}`,
+      productService: 'New product',
+      inPrice: '0',
+      price: '0',
+      unit: 'pieces',
+      inStock: '0',
+      description: 'Product description'
+    };
+    setProducts([newProduct, ...products]);
+    setTimeout(() => startEditing(id, 'productService', 'New product'), 100);
   };
-
-  const addNewProduct = async () => {
-    try {
-      const newProduct = {
-        articleNo: `New-${Date.now().toString().slice(-8)}`,
-        productService: 'New product',
-        inPrice: '0',
-        price: '0',
-        unit: 'pieces',
-        inStock: '0',
-        description: 'Product description'
-      };
-      
-      // In a real implementation, this would call the API
-      // const savedProduct = await createProduct(newProduct);
-      
-      // For demo purposes, we'll just add it to local state with a fake ID
-      const fakeId = Math.max(...products.map(p => p.id), 0) + 1;
-      const productWithId = { ...newProduct, id: fakeId };
-      
-      setProducts([productWithId, ...products]);
-      
-      // Start editing the new product name
-      setTimeout(() => {
-        startEditing(fakeId, 'productService', 'New product');
-      }, 100);
-    } catch (err) {
-      console.error('Error creating product:', err);
-    }
-  };
-
-  // Determine which fields to show based on screen size
-  // This will be handled by responsive CSS classes
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header showSidebar={true} />
-      
+      <Header showSidebar />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        
         <main className="flex-1 overflow-x-auto">
           <div className="container mx-auto px-4 py-6 max-w-7xl">
             {/* Action Bar */}
             <div className="mb-6 flex flex-col md:flex-row gap-10 justify-between">
               <div className="flex-8 space-y-3">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder={t('pricelist.search.article')}
-                    className="input-field pl-10 w-full"
-                  />
-                  <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder={t('pricelist.search.product')}
-                    className="input-field pl-10 w-full"
-                  />
-                  <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-                </div>
+                {[t('pricelist.search.article'), t('pricelist.search.product')].map((placeholder, i) => (
+                  <div key={i} className="relative">
+                    <input type="text" placeholder={placeholder} className="input-field pl-10 w-full" />
+                    <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+                  </div>
+                ))}
               </div>
-              
               <div className="flex md:flex-row justify-between md:justify-start gap-2">
-                <button 
-                  onClick={addNewProduct}
-                  className="btn btn-primary flex items-center justify-center gap-1 whitespace-nowrap h-8 text-sm px-3 rounded-70 shadow-2xl-blackbtn btn-primary flex items-center justify-center gap-2 whitespace-nowrap h-8 text-sm px-3 rounded-lg shadow-[0px_4px_6px_rgba(0,0,0,0.5)]"
-                >
-                  <Plus size={18} />
-                  <span className="hidden sm:inline">{t('pricelist.newProduct')}</span>
-                </button>
-                <button className="btn btn-primary flex items-center justify-center gap-2 whitespace-nowrap h-8 text-sm px-3 rounded-lg shadow-[0px_4px_6px_rgba(0,0,0,0.5)]">
-                  <Printer size={18} />
-                  <span className="hidden sm:inline">{t('pricelist.printList')}</span>
-                </button>
-                <button className="btn btn-primary flex items-center justify-center gap-2 whitespace-nowrap h-8 text-sm px-3 rounded-lg shadow-[0px_4px_6px_rgba(0,0,0,0.5)]">
-                  <ToggleRight size={18} />
-                  <span className="hidden sm:inline">{t('pricelist.advancedMode')}</span>
-                </button>
+                {[{
+                  icon: <Plus size={18} />, action: addNewProduct, text: t('pricelist.newProduct')
+                }, {
+                  icon: <Printer size={18} />, action: () => {}, text: t('pricelist.printList')
+                }, {
+                  icon: <ToggleRight size={18} />, action: () => {}, text: t('pricelist.advancedMode')
+                }].map(({ icon, action, text }, i) => (
+                  <button
+                    key={i}
+                    onClick={action}
+                    className="btn btn-primary flex items-center gap-2 h-8 text-sm px-3 rounded-lg shadow"
+                  >
+                    {icon}<span className="hidden sm:inline">{text}</span>
+                  </button>
+                ))}
               </div>
             </div>
-            
-            {/* Product Table */}
+
+            {/* Table */}
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
               </div>
             ) : error ? (
-              <div className="text-red-500 text-center py-8">
-                <p>{error}</p>
-              </div>
+              <div className="text-red-500 text-center py-8">{error}</div>
             ) : (
               <div className="bg-white rounded-lg shadow overflow-x-auto max-h-[70vh] overflow-y-auto">
-                {/* Desktop View */}
-                <table className="hidden md:table w-full">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                <table className="w-full">
+                  <thead className="bg-gray-50 border-b">
                     <tr>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.articleNo')}</th>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.product')}</th>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.inPrice')}</th>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.price')}</th>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.unit')}</th>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.inStock')}</th>
-                      <th className="py-3 px-4 text-left font-medium text-gray-500">{t('pricelist.description')}</th>
-                      <th className="py-3 px-4 text-center font-medium text-gray-500">Actions</th>
+                      {["articleNo", "product", "inPrice", "price", "unit", "inStock", "description"]
+                        .map(key => (
+                          <th key={key} className="py-3 px-4 text-left font-medium text-gray-500">
+                            {t(`pricelist.${key}`)}
+                          </th>
+                        ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product, index) => (
-                      <tr 
-                        key={product.id} 
-                        className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-                      >
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'articleNo', product.articleNo)}
-                        >
-                          {editingId === product.id && editingField === 'articleNo' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.articleNo
-                          )}
-                        </td>
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'productService', product.productService)}
-                        >
-                          {editingId === product.id && editingField === 'productService' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.productService
-                          )}
-                        </td>
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'inPrice', product.inPrice)}
-                        >
-                          {editingId === product.id && editingField === 'inPrice' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.inPrice
-                          )}
-                        </td>
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'price', product.price)}
-                        >
-                          {editingId === product.id && editingField === 'price' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.price
-                          )}
-                        </td>
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'unit', product.unit)}
-                        >
-                          {editingId === product.id && editingField === 'unit' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.unit
-                          )}
-                        </td>
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'inStock', product.inStock)}
-                        >
-                          {editingId === product.id && editingField === 'inStock' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.inStock
-                          )}
-                        </td>
-                        <td 
-                          className="py-3 px-4 border-b border-gray-200"
-                          onClick={() => startEditing(product.id, 'description', product.description)}
-                        >
-                          {editingId === product.id && editingField === 'description' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.description
-                          )}
-                        </td>
-                        <td className="py-3 px-4 border-b border-gray-200 text-center">
-                          <button className="text-gray-500 hover:text-gray-700">
-                            <MoreHorizontal size={18} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                  {products.map((p, i) => (
+  <tr key={p.id} className={i % 2 ? 'bg-gray-50' : 'bg-white'}>
+    {["articleNo", "productService", "inPrice", "price", "unit", "inStock", "description"].map((field) => (
+      <td
+        key={field}
+        className="py-3 px-4 border-b"
+        onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+      >
+        <EditableCell
+          value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
+          isEditing={editing.id === p.id && editing.field === field}
+          onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+          onChange={(e) => setEditing({ ...editing, value: e.target.value })}
+          onBlur={saveChanges}
+          onKeyDown={handleKeyDown}
+        />
+      </td>
+    ))}
+    <td className="py-3 px-4 border-b text-center">
+      <button className="text-gray-500 hover:text-gray-700">
+        <MoreHorizontal size={18} />
+      </button>
+    </td>
+  </tr>
+))}
+
                   </tbody>
                 </table>
-                
-                {/* Tablet View */}
-                <div className="md:hidden lg:hidden">
-                  {products.map((product, index) => (
-                    <div 
-                      key={product.id}
-                      className={`p-4 border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <div 
-                          className="font-medium"
-                          onClick={() => startEditing(product.id, 'articleNo', product.articleNo)}
-                        >
-                          {editingId === product.id && editingField === 'articleNo' ? (
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={handleInputChange}
-                              onBlur={handleBlur}
-                              onKeyDown={handleKeyDown}
-                              className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                              autoFocus
-                            />
-                          ) : (
-                            product.articleNo
-                          )}
-                        </div>
-                        <div className="flex space-x-2">
-                          {index === 2 && <div className="text-primary-500">→</div>}
-                          <button className="text-gray-500 hover:text-gray-700">
-                            <MoreHorizontal size={18} />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      <div 
-                        className="mb-2"
-                        onClick={() => startEditing(product.id, 'productService', product.productService)}
-                      >
-                        {editingId === product.id && editingField === 'productService' ? (
-                          <input
-                            type="text"
-                            value={editingValue}
-                            onChange={handleInputChange}
-                            onBlur={handleBlur}
-                            onKeyDown={handleKeyDown}
-                            className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                            autoFocus
-                          />
-                        ) : (
-                          product.productService
-                        )}
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                        <div>
-                          <div className="text-xs text-gray-500">{t('pricelist.price')}</div>
-                          <div 
-                            onClick={() => startEditing(product.id, 'price', product.price)}
-                          >
-                            {editingId === product.id && editingField === 'price' ? (
-                              <input
-                                type="text"
-                                value={editingValue}
-                                onChange={handleInputChange}
-                                onBlur={handleBlur}
-                                onKeyDown={handleKeyDown}
-                                className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                                autoFocus
-                              />
-                            ) : (
-                              product.price
-                            )}
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <div className="text-xs text-gray-500">{t('pricelist.inStock')}</div>
-                          <div 
-                            onClick={() => startEditing(product.id, 'inStock', product.inStock)}
-                          >
-                            {editingId === product.id && editingField === 'inStock' ? (
-                              <input
-                                type="text"
-                                value={editingValue}
-                                onChange={handleInputChange}
-                                onBlur={handleBlur}
-                                onKeyDown={handleKeyDown}
-                                className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                                autoFocus
-                              />
-                            ) : (
-                              product.inStock
-                            )}
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <div className="text-xs text-gray-500">{t('pricelist.unit')}</div>
-                          <div 
-                            onClick={() => startEditing(product.id, 'unit', product.unit)}
-                          >
-                            {editingId === product.id && editingField === 'unit' ? (
-                              <input
-                                type="text"
-                                value={editingValue}
-                                onChange={handleInputChange}
-                                onBlur={handleBlur}
-                                onKeyDown={handleKeyDown}
-                                className="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-400"
-                                autoFocus
-                              />
-                            ) : (
-                              product.unit
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             )}
           </div>
