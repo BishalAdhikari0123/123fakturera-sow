@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import { 
-  Search, Plus, Printer, ToggleRight, Trash2, MoreHorizontal
+  Search, Plus, Printer, ToggleRight, MoreHorizontal
 } from 'lucide-react';
-import { getPriceList, updateProduct, createProduct } from '../utils/api';
+import { getPriceList, updateProduct } from '../utils/api';
 
 interface Product {
   id: number;
@@ -161,8 +161,8 @@ const PriceListPage = () => {
         <main className="flex-1 overflow-x-auto">
           <div className="container mx-auto px-4 py-6 max-w-7xl">
             {/* Action Bar */}
-            <div className="mb-6 flex flex-col md:flex-row gap-4">
-              <div className="flex-1 space-y-3">
+            <div className="mb-6 flex flex-col md:flex-row gap-10 justify-between">
+              <div className="flex-8 space-y-3">
                 <div className="relative">
                   <input
                     type="text"
@@ -181,19 +181,19 @@ const PriceListPage = () => {
                 </div>
               </div>
               
-              <div className="flex md:flex-col justify-between md:justify-start gap-2">
+              <div className="flex md:flex-row justify-between md:justify-start gap-2">
                 <button 
                   onClick={addNewProduct}
-                  className="btn btn-primary flex items-center justify-center gap-2 whitespace-nowrap"
+                  className="btn btn-primary flex items-center justify-center gap-1 whitespace-nowrap h-8 text-sm px-3 rounded-70 shadow-2xl-blackbtn btn-primary flex items-center justify-center gap-2 whitespace-nowrap h-8 text-sm px-3 rounded-lg shadow-[0px_4px_6px_rgba(0,0,0,0.5)]"
                 >
                   <Plus size={18} />
                   <span className="hidden sm:inline">{t('pricelist.newProduct')}</span>
                 </button>
-                <button className="btn btn-outline flex items-center justify-center gap-2 whitespace-nowrap">
+                <button className="btn btn-primary flex items-center justify-center gap-2 whitespace-nowrap h-8 text-sm px-3 rounded-lg shadow-[0px_4px_6px_rgba(0,0,0,0.5)]">
                   <Printer size={18} />
                   <span className="hidden sm:inline">{t('pricelist.printList')}</span>
                 </button>
-                <button className="btn btn-outline flex items-center justify-center gap-2 whitespace-nowrap">
+                <button className="btn btn-primary flex items-center justify-center gap-2 whitespace-nowrap h-8 text-sm px-3 rounded-lg shadow-[0px_4px_6px_rgba(0,0,0,0.5)]">
                   <ToggleRight size={18} />
                   <span className="hidden sm:inline">{t('pricelist.advancedMode')}</span>
                 </button>
@@ -210,7 +210,7 @@ const PriceListPage = () => {
                 <p>{error}</p>
               </div>
             ) : (
-              <div className="bg-white rounded-lg shadow overflow-x-auto">
+              <div className="bg-white rounded-lg shadow overflow-x-auto max-h-[70vh] overflow-y-auto">
                 {/* Desktop View */}
                 <table className="hidden md:table w-full">
                   <thead className="bg-gray-50 border-b border-gray-200">

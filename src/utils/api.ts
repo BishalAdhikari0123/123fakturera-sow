@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Product } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -15,17 +16,17 @@ export const getTerms = async (language: string) => {
 };
 
 export const getPriceList = async () => {
-  const response = await api.get('/products');
+  const response = await api.get<Product[]>('/products');
   return response.data;
 };
 
-export const updateProduct = async (id: number, productData: any) => {
-  const response = await api.put(`/products/${id}`, productData);
+export const updateProduct = async (id: number, productData: Partial<Product>) => {
+  const response = await api.put<Product>(`/products/${id}`, productData);
   return response.data;
 };
 
-export const createProduct = async (productData: any) => {
-  const response = await api.post('/products', productData);
+export const createProduct = async (productData: Omit<Product, 'id'>) => {
+  const response = await api.post<Product>('/products', productData);
   return response.data;
 };
 
