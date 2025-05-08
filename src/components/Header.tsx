@@ -54,11 +54,12 @@ const Header = ({ showSidebar = false, userName = "John Andre", companyName = "S
             className="flex items-center gap-2 hover:bg-primary-600 py-1 px-2 rounded transition-colors"
           >
             <span className="hidden md:inline">{t('language')}</span>
-            <img 
-              src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`} 
-              alt={i18n.language === 'en' ? 'English' : 'Svenska'} 
-              className="w-6 h-auto"
-            />
+            <img
+  src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`}
+  alt={i18n.language === 'en' ? 'English' : 'Svenska'}
+  className="w-6 h-auto"  // Tailwind class for width and auto height
+/>
+
           </button>
         </div>
       </div>
