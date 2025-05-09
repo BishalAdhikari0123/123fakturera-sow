@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { getTerms } from '../utils/api';
+import './TermsPage.css';
 
 const TermsPage = () => {
   const { i18n } = useTranslation();
@@ -104,36 +105,36 @@ const TermsPage = () => {
   }, [i18n.language]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="terms-page">
       <Header />
       
-      <main className="flex-1">
-        <div className="bg-terms-bg bg-cover bg-center h-40 md:h-60 relative">
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <div className="text-center">
+      <main className="terms-main">
+        <div className="terms-hero" style={{ backgroundImage: "url('https://storage.123fakturera.se/public/wallpapers/sverige43.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')" }}>
+          <div className="terms-hero-overlay">
+            <div className="terms-hero-content">
               <img 
                 src="https://storage.123fakturera.se/public/icons/diamond.png" 
                 alt="123Fakturera"
-                className="w-14 h-14 mx-auto mb-3"
+                className="terms-hero-logo"
               />
-              <h1 className="text-white text-3xl md:text-4xl font-bold">123Fakturera</h1>
+              <h1 className="terms-hero-title">123Fakturera</h1>
             </div>
           </div>
         </div>
         
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-          <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
+        <div className="terms-container">
+          <div className="terms-content-wrapper">
             {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
+              <div className="terms-loading">
+                <div className="terms-spinner"></div>
               </div>
             ) : error ? (
-              <div className="text-red-500 text-center py-8">
+              <div className="terms-error">
                 <p>{error}</p>
               </div>
             ) : (
               <div 
-                className="terms-content prose max-w-none"
+                className="terms-content prose"
                 dangerouslySetInnerHTML={{ __html: termsContent }}
               />
             )}
@@ -141,8 +142,8 @@ const TermsPage = () => {
         </div>
       </main>
       
-      <footer className="bg-gray-100 border-t border-gray-200 py-6">
-        <div className="container mx-auto px-4 text-center text-gray-600">
+      <footer className="terms-footer">
+        <div className="terms-footer-container">
           <p>&copy; {new Date().getFullYear()} 123Fakturera. All rights reserved.</p>
         </div>
       </footer>

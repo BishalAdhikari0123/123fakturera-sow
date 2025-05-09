@@ -1,0 +1,243 @@
+/* PriceListPage.css */
+
+:root {
+  --text-secondary: var(--gray-500);
+  --shadow-default: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.price-list-page {
+  min-height: 100vh;
+  background-color: var(--gray-50);
+  display: flex;
+  flex-direction: column;
+}
+
+.price-list-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.price-list-main {
+  flex: 1;
+  overflow-x: auto;
+}
+
+.price-list-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.price-list-actions {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 2.5rem;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .price-list-actions {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.price-list-search {
+  margin-left: 6%;
+  flex: 8;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 32px 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5rem;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+.price-list-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .price-list-buttons {
+    justify-content: flex-start;
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2rem;
+  font-size: 0.875rem;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-default);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-direction: row-reverse;
+}
+
+.btn-primary-pl {
+  background-color: white;
+  color: var(--primary-500);
+  border: 1px solid var(--primary-500);
+}
+
+.btn-primary-pl:hover {
+  background-color: var(--primary-100);
+  color: var(--primary-700);
+}
+
+.btn-text-hidden {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .btn-text-hidden {
+    display: inline;
+  }
+}
+
+.price-list-table-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-default);
+  overflow-x: auto;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.price-list-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 1rem;
+  margin-left: 5%;
+}
+
+.price-list-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.price-list-table td {
+  padding: 0.3rem 1rem;
+  margin: 0.5rem;
+  border-radius: 2rem;
+  background-color: white;
+  border: 2px solid #9fbefa;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.price-list-table tr:nth-child(even) {
+  background-color: var(--gray-50);
+}
+
+.price-list-table tr:nth-child(odd) {
+  background-color: white;
+}
+
+table td.action-cell,
+table th.action-cell {
+  border: none !important;
+  background: transparent;
+}
+
+.price-list-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.price-list-spinner {
+  animation: spin 1s linear infinite;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: var(--primary-500);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.price-list-error {
+  color: var(--red-500);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.editable-cell input {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid black;
+  border-radius: 0.25rem;
+}
+
+.action-button {
+  color: var(--text-secondary);
+}
+
+.action-button:hover {
+  color: var(--gray-700);
+}
+
+@media (max-width: 768px) {
+  th,
+  td {
+    display: none;
+  }
+
+  th.show-on-mobile,
+  td.show-on-mobile,
+  .action-cell.show-on-mobile {
+    display: table-cell !important;
+  }
+}
+
+th, td {
+  display: table-cell;
+}
+
+@media (max-width: 1024px) {
+  .hide-on-ipad {
+    display: none !important;
+  }
+}

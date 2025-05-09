@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import './LanguageSwitcher.css';
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -15,13 +16,13 @@ const LanguageSwitcher = ({ className = '' }: LanguageSwitcherProps) => {
   return (
     <button 
       onClick={toggleLanguage}
-      className={`flex items-center gap-2 ${className}`}
+      className={`language-switcher ${className}`}
       aria-label={`Switch to ${i18n.language === 'en' ? 'Swedish' : 'English'}`}
     >
       <img 
         src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`} 
         alt={i18n.language === 'en' ? 'English' : 'Svenska'} 
-        className="w-6 h-auto"
+        className="language-flag"
       />
     </button>
   );

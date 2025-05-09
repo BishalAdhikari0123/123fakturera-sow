@@ -4,12 +4,21 @@ meta {
   seq: 2
 }
 
-get {
-  url: https//:localhost:5000
-  body: none
+post {
+  url: http://localhost:5000/api/products
+  body: json
   auth: inherit
 }
 
-params:path {
-  localhost:5000: 
+body:json {
+  {
+      "articleNo": "A1001",
+      "productService": "Laptop",
+      "inPrice": "800",
+      "price": "1000",
+      "unit": "Piece",
+      "inStock": "50",
+      "description": "15-inch laptop with 16GB RAM and 512GB SSD"
+    }
+  
 }

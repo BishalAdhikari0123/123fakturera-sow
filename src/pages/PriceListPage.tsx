@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import { Search, Plus, Printer, ToggleRight, MoreHorizontal } from 'lucide-react';
 import { getPriceList, updateProduct } from '../utils/api';
+import './PriceListStyles.css';
+import { ArrowRight } from 'lucide-react'
 
 interface Product {
   id: number;
@@ -39,11 +41,14 @@ const EditableCell = ({
     onBlur={onBlur}
     onKeyDown={onKeyDown}
     autoFocus
+    className="editable-cell-input"
   />
 ) : (
-  <div onClick={onClick}>{value}</div>
+  <div onClick={onClick} className="editable-cell">
+    {value}
+    {isEditing && <ArrowRight size={18} className="editable-arrow" />}
+  </div>
 );
-
 const PriceListPage = () => {
   const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
@@ -105,89 +110,90 @@ const PriceListPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="price-list-page">
       <Header showSidebar />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="price-list-content">
         <Sidebar />
-        <main className="flex-1 overflow-x-auto">
-          <div className="container mx-auto px-4 py-6 max-w-7xl">
+        <main className="price-list-main">
+          <div className="price-list-container">
             {/* Action Bar */}
-            <div className="mb-6 flex flex-col md:flex-row gap-10 justify-between">
-              <div className="flex-8 space-y-3">
+            <div className="price-list-actions">
+              <div className="price-list-search">
                 {[t('pricelist.search.article'), t('pricelist.search.product')].map((placeholder, i) => (
-                  <div key={i} className="relative">
-                    <input type="text" placeholder={placeholder} className="input-field pl-10 w-full" />
-                    <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+                  <div key={i} className="search-container">
+                    <input type="text" placeholder={placeholder} className="search-input" />
+                    <Search className="search-icon" size={18} />
                   </div>
                 ))}
               </div>
-              <div className="flex md:flex-row justify-between md:justify-start gap-2">
-                {[{
-                  icon: <Plus size={18} />, action: addNewProduct, text: t('pricelist.newProduct')
-                }, {
-                  icon: <Printer size={18} />, action: () => {}, text: t('pricelist.printList')
-                }, {
-                  icon: <ToggleRight size={18} />, action: () => {}, text: t('pricelist.advancedMode')
-                }].map(({ icon, action, text }, i) => (
-                  <button
-                    key={i}
-                    onClick={action}
-                    className="btn btn-primary flex items-center gap-2 h-8 text-sm px-3 rounded-lg shadow"
-                  >
-                    {icon}<span className="hidden sm:inline">{text}</span>
-                  </button>
-                ))}
+              <div className="price-list-buttons">
+                <button onClick={addNewProduct} className="btn btn-primary-pl">
+                  <Plus size={18} /><span className="btn-text-hidden">{t('pricelist.newProduct')}</span>
+                </button>
+                <button className="btn btn-primary-pl">
+                  <Printer size={18} /><span className="btn-text-hidden">{t('pricelist.printList')}</span>
+                </button>
+                <button className="btn btn-primary-pl">
+                  <ToggleRight size={18} /><span className="btn-text-hidden">{t('pricelist.advancedMode')}</span>
+                </button>
               </div>
             </div>
 
             {/* Table */}
             {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
+              <div className="price-list-loading">
+                <div className="price-list-spinner"></div>
               </div>
             ) : error ? (
-              <div className="text-red-500 text-center py-8">{error}</div>
+              <div className="price-list-error">{error}</div>
             ) : (
-              <div className="bg-white rounded-lg shadow overflow-x-auto max-h-[70vh] overflow-y-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50 border-b">
-                    <tr>
-                      {["articleNo", "product", "inPrice", "price", "unit", "inStock", "description"]
-                        .map(key => (
-                          <th key={key} className="py-3 px-4 text-left font-medium text-gray-500">
-                            {t(`pricelist.${key}`)}
-                          </th>
-                        ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {products.map((p, i) => (
-  <tr key={p.id} className={i % 2 ? 'bg-gray-50' : 'bg-white'}>
-    {["articleNo", "productService", "inPrice", "price", "unit", "inStock", "description"].map((field) => (
-      <td
-        key={field}
-        className="py-3 px-4 border-b"
-        onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-      >
-        <EditableCell
-          value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
-          isEditing={editing.id === p.id && editing.field === field}
-          onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-          onChange={(e) => setEditing({ ...editing, value: e.target.value })}
-          onBlur={saveChanges}
-          onKeyDown={handleKeyDown}
-        />
-      </td>
+              <div className="price-list-table-container">
+                <table className="price-list-table">
+                  <thead>
+  <tr>
+    {["articleNo", "product", "inPrice", "price", "unit", "inStock", "description"].map(key => (
+      <th key={key}  className={
+    (key === "product" || key === "price" ? "show-on-mobile" : "") +
+    (key === "inPrice" || key === "description" ? " hide-on-ipad" : "")
+  }>
+        {t(`pricelist.${key}`)}
+      </th>
     ))}
-    <td className="py-3 px-4 border-b text-center">
-      <button className="text-gray-500 hover:text-gray-700">
-        <MoreHorizontal size={18} />
-      </button>
-    </td>
+    <th className="show-on-mobile"></th>
   </tr>
-))}
+</thead>
+<tbody>
+  {products.map((p) => (
+    <tr key={p.id}>
+      {["articleNo", "productService", "inPrice", "price", "unit", "inStock", "description"].map((field) => (
+        <td
+          key={field}
+          className={
+            (field === "productService" || field === "price" ? "show-on-mobile" : "") +
+            (field === "inPrice" || field === "description" ? " hide-on-ipad" : "")
+          }
+          onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+        >
+          <EditableCell
+            value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
+            isEditing={editing.id === p.id && editing.field === field}
+            onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+            onChange={(e) => setEditing({ ...editing, value: e.target.value })}
+            onBlur={saveChanges}
+            onKeyDown={handleKeyDown}
+          />
+        </td>
+      ))}
+      <td className="action-cell show-on-mobile">
+        <button className="action-button">
+          <MoreHorizontal size={18} />
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
 
-                  </tbody>
+
                 </table>
               </div>
             )}

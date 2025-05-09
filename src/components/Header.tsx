@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '../utils/cn';
+import './Header.css';
 
 interface HeaderProps {
   showSidebar?: boolean;
@@ -24,66 +24,59 @@ const Header = ({ showSidebar = false, userName = "John Andre", companyName = "S
   };
 
   return (
-    <header className="bg-primary-500 text-white shadow-md">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div className="flex items-center gap-3">
+    <header className="header">
+      <div className="header-container">
+        <div className="header-left">
           {showSidebar ? (
-            <button onClick={toggleMenu} className="text-white p-1 focus:outline-none" aria-label="Menu">
+            <button onClick={toggleMenu} className="menu-button" aria-label="Menu">
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           ) : (
-            <button onClick={toggleMenu} className="text-white p-1 focus:outline-none" aria-label="Menu">
+            <button onClick={toggleMenu} className="menu-button" aria-label="Menu">
               <Menu size={24} />
             </button>
           )}
           {userName && companyName && (
-            <div className="hidden md:flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-primary-600 flex items-center justify-center">
-                <span className="font-bold text-lg">{userName.split(' ').map(n => n[0]).join('')}</span>
+            <div className="user-info">
+              <div className="user-avatar">
+                <span className="user-initials">{userName.split(' ').map(n => n[0]).join('')}</span>
               </div>
               <div>
-                <p className="font-semibold">{userName}</p>
-                <p className="text-sm text-primary-100">{companyName}</p>
+                <p className="user-name">{userName}</p>
+                <p className="company-name">{companyName}</p>
               </div>
             </div>
           )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="header-right">
           <button 
             onClick={toggleLanguage} 
-            className="flex items-center gap-2 hover:bg-primary-600 py-1 px-2 rounded transition-colors"
+            className="language-button"
           >
-            <span className="hidden md:inline">{t('language')}</span>
-            <img
-  src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`}
-  alt={i18n.language === 'en' ? 'English' : 'Svenska'}
-  className="w-6 h-auto"  // Tailwind class for width and auto height
-/>
-
+            <span className="language-text">{t('language')}</span>
+            <img 
+              src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`} 
+              alt={i18n.language === 'en' ? 'English' : 'Svenska'} 
+              className="language-flag"
+            />
           </button>
         </div>
       </div>
       {/* Mobile menu */}
-      <div className={cn(
-        "fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300",
-        isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-      )}>
-        <div className={cn(
-          "fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transition-transform duration-300 transform",
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        )}>
-          <div className="p-4 bg-primary-500 text-white flex justify-between items-center">
-            <span className="font-semibold">{t('header.menu')}</span>
-            <button onClick={toggleMenu} className="text-white p-1">
+      <div className={`mobile-menu-overlay ${isMenuOpen ? 'visible' : 'hidden'}`}>
+        <div className={`mobile-menu ${isMenuOpen ? 'visible' : 'hidden'}`}>
+          <div className="mobile-menu-header">
+            <span className="mobile-menu-title">{t('header.menu')}</span>
+            <button onClick={toggleMenu} className="mobile-menu-close">
               <X size={20} />
             </button>
           </div>
-          <nav className="p-4">
-            <ul className="space-y-2">
+          <nav className="mobile-menu-nav">
+            <ul className="mobile-menu-list">
               <li>
                 <Link 
                   to="/" 
-                  className="block p-2 hover:bg-gray-100 rounded transition-colors"
+                  className="mobile-menu-link"
                   onClick={toggleMenu}
                 >
                   {t('pricelist.title')}
@@ -92,7 +85,7 @@ const Header = ({ showSidebar = false, userName = "John Andre", companyName = "S
               <li>
                 <Link 
                   to="/terms" 
-                  className="block p-2 hover:bg-gray-100 rounded transition-colors"
+                  className="mobile-menu-link"
                   onClick={toggleMenu}
                 >
                   Terms & Conditions
