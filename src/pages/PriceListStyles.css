@@ -223,15 +223,15 @@ table th.action-cell {
   padding: 2rem 0;
 }
 
-.editable-cell-input {
-  border: 1px solid #ccc !important;
-  padding: 4px;
-  border-radius: 4px;
-}
-
-.editable-cell-input:focus {
-  outline: none;
-  border: none;  
+.editable-cell-input,
+.editable-cell-input:focus,
+.editable-cell-input:active,
+.editable-cell-input::before,
+.editable-cell-input::after {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 
