@@ -54,11 +54,12 @@ const Header = ({ showSidebar = false, userName = "John Andre", companyName = "S
             className="language-button"
           >
             <span className="language-text">{t('language')}</span>
-            <img 
-              src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`} 
-              alt={i18n.language === 'en' ? 'English' : 'Svenska'} 
-              className="language-flag"
+           <img
+              src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`}
+               alt={i18n.language === 'en' ? 'English' : 'Svenska'}
+               className="language-flag"
             />
+
           </button>
         </div>
       </div>
