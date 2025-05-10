@@ -32,7 +32,8 @@
 .price-list-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.5rem 1rem;
+  /* padding: 1.5rem 1rem; */
+  padding-top: 1rem;
 }
 
 .price-list-actions {
@@ -86,6 +87,10 @@
   justify-content: space-between;
   gap: 0.5rem;
 }
+.header-with-arrow{
+  display: flex;
+  align-items: center;
+}
 
 @media (min-width: 768px) {
   .price-list-buttons {
@@ -112,6 +117,7 @@
   background-color: white;
   color: var(--primary-500);
   border: 1px solid var(--primary-500);
+  display: flex;
 }
 
 .btn-primary-pl:hover {
@@ -128,6 +134,13 @@
     display: inline;
   }
 }
+.arrow-column {
+  width: 32px;
+  text-align: center;
+  border: none !important;
+}
+
+
 
 .price-list-table-container {
   background-color: white;
@@ -142,7 +155,7 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 1rem;
-  margin-left: 5%;
+  /* margin-left: 5%; */
 }
 
 .price-list-table th {
@@ -210,12 +223,17 @@ table th.action-cell {
   padding: 2rem 0;
 }
 
-.editable-cell input {
-  width: 100%;
-  padding: 0.25rem 0.5rem;
-  border: 2px solid black;
-  border-radius: 0.25rem;
+.editable-cell-input {
+  border: 1px solid #ccc !important;
+  padding: 4px;
+  border-radius: 4px;
 }
+
+.editable-cell-input:focus {
+  outline: none;
+  border: none;  
+}
+
 
 .action-button {
   color: var(--text-secondary);
@@ -237,8 +255,32 @@ table th.action-cell {
 
 /* Tablet and down: hide desktop-only */
 @media (max-width: 1024px) {
-  .desktop-only {
-    display: none !important;
+  .price-list-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .price-list-buttons {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+  }
+
+  .price-list-buttons .btn {
+    width: 80%;
+    justify-content: center;
+  }
+
+  .price-list-search {
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+  }
+
+  .search-container {
+    width: 80% !important;
+    max-width: none;
   }
 }
 
@@ -247,6 +289,7 @@ table th.action-cell {
   td {
     display: none;
   }
+  
    .tablet-visible {
     display: none !important;
   }
@@ -271,6 +314,7 @@ table th.action-cell {
 
 th, td {
   display: table-cell;
+  background-color: transparent !important;
 }
 .sidebar {
   display: none;
