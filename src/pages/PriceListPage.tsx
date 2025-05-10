@@ -111,7 +111,11 @@ const PriceListPage = () => {
 
   return (
     <div className="price-list-page">
-      <Header showSidebar />
+      <div className="sticky-header">
+  <Header showSidebar />
+      </div>
+
+
       <div className="price-list-content">
         <Sidebar />
         <main className="price-list-main">
@@ -149,42 +153,46 @@ const PriceListPage = () => {
             ) : (
               <div className="price-list-table-container">
                 <table className="price-list-table">
-                  <thead>
+               <thead className="sticky-header">
   <tr>
-    {["articleNo", "product", "inPrice", "price", "unit", "inStock", "description"].map(key => (
-      <th key={key}  className={
-    (key === "product" || key === "price" ? "show-on-mobile" : "") +
-    (key === "inPrice" || key === "description" ? " hide-on-ipad" : "")
-  }>
-        {t(`pricelist.${key}`)}
-      </th>
-    ))}
-    <th className="show-on-mobile"></th>
+    {["articleNo", "product", "inPrice", "price", "unit", "inStock", "description"].map((key) => {
+      let className = "desktop-only";
+      if (["product", "price"].includes(key)) className = "mobile-visible";
+      else if (["unit", "inStock"].includes(key)) className = "tablet-visible";
+      return (
+        <th key={key} className={className}>
+          {t(`pricelist.${key}`)}
+        </th>
+      );
+    })}
+    <th className="mobile-visible"></th>
   </tr>
 </thead>
 <tbody>
   {products.map((p) => (
     <tr key={p.id}>
-      {["articleNo", "productService", "inPrice", "price", "unit", "inStock", "description"].map((field) => (
-        <td
-          key={field}
-          className={
-            (field === "productService" || field === "price" ? "show-on-mobile" : "") +
-            (field === "inPrice" || field === "description" ? " hide-on-ipad" : "")
-          }
-          onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-        >
-          <EditableCell
-            value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
-            isEditing={editing.id === p.id && editing.field === field}
+      {["articleNo", "productService", "inPrice", "price", "unit", "inStock", "description"].map((field) => {
+        let className = "desktop-only";
+        if (["productService", "price"].includes(field)) className = "mobile-visible";
+        else if (["unit", "inStock"].includes(field)) className = "tablet-visible";
+        return (
+          <td
+            key={field}
+            className={className}
             onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-            onChange={(e) => setEditing({ ...editing, value: e.target.value })}
-            onBlur={saveChanges}
-            onKeyDown={handleKeyDown}
-          />
-        </td>
-      ))}
-      <td className="action-cell show-on-mobile">
+          >
+            <EditableCell
+              value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
+              isEditing={editing.id === p.id && editing.field === field}
+              onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+              onChange={(e) => setEditing({ ...editing, value: e.target.value })}
+              onBlur={saveChanges}
+              onKeyDown={handleKeyDown}
+            />
+          </td>
+        );
+      })}
+      <td className="action-cell mobile-visible">
         <button className="action-button">
           <MoreHorizontal size={18} />
         </button>
@@ -192,6 +200,7 @@ const PriceListPage = () => {
     </tr>
   ))}
 </tbody>
+
 
 
                 </table>

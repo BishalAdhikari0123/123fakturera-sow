@@ -1,10 +1,16 @@
-/* PriceListPage.css */
+
 
 :root {
   --text-secondary: var(--gray-500);
   --shadow-default: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
-
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* background-color: white; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
 .price-list-page {
   min-height: 100vh;
   background-color: var(--gray-50);
@@ -219,25 +225,70 @@ table th.action-cell {
   color: var(--gray-700);
 }
 
+.desktop-only {
+  display: table-cell;
+}
+.tablet-visible {
+  display: table-cell;
+}
+.mobile-visible {
+  display: table-cell;
+}
+
+/* Tablet and down: hide desktop-only */
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   th,
   td {
     display: none;
   }
+   .tablet-visible {
+    display: none !important;
+  }
 
+  .desktop-only {
+    display: none !important;
+  }
+.mobile-visible {
+    display: table-cell !important;
+  }
   th.show-on-mobile,
   td.show-on-mobile,
   .action-cell.show-on-mobile {
     display: table-cell !important;
   }
+
+  .menu { 
+    display: none !important;
+  }
 }
+
 
 th, td {
   display: table-cell;
 }
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    display: block;
+  }
+}
+
 
 @media (max-width: 1024px) {
-  .hide-on-ipad {
+   .hide-on-ipad {
+    display: none !important;
+  }
+
+  .menu {
     display: none !important;
   }
 }
