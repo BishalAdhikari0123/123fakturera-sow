@@ -5,7 +5,7 @@ import { getTerms } from '../utils/api';
 import './TermsPage.css';
 
 const TermsPage = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [termsContent, setTermsContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,21 +32,20 @@ const TermsPage = () => {
     fetchTerms();
   }, [i18n.language]);
 
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
   return (
     <div className="terms-page">
       <TermsHeader />
       <main className="terms-main">
-        <div className="terms-hero">
-          <div className="terms-hero-overlay">
-            <div className="terms-hero-content">
-              <img
-                src="https://storage.123fakturera.se/public/icons/diamond.png"
-                alt="123Fakturera"
-                className="terms-hero-logo"
-              />
-              <h1 className="terms-hero-title">123Fakturera</h1>
-            </div>
-          </div>
+
+        <div className="terms-header-section">
+          <h2>{t('terms.title')}</h2>
+          <button className="go-back-button" onClick={handleGoBack}>
+            {t('terms.closeAndGoBack')}
+          </button>
         </div>
 
         <div className="terms-container">

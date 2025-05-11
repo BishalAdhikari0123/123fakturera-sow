@@ -15,51 +15,42 @@ body {
   background-image: url('https://storage.123fakturera.se/public/wallpapers/sverige43.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
   margin: 0;
   padding: 0;
-  background-color: transparent;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: auto;             
+  background-position: center top;   
+  overflow-x: hidden;                
 }
+
+.terms-header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  color: white;
+  font-size: 1.2rem;       
+  font-weight: bold;  
+  gap: 0.8rem;  
+}
+
+.go-back-button {
+  background-color: rgb(8, 148, 8);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  width: 18%;
+  height: 50px;
+  cursor: pointer;
+  color:  white;
+  
+}
+
 
 .terms-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-/* Hero Section */
-.terms-hero {
-  position: relative;
-  /* background-image: url('https://storage.123fakturera.se/public/wallpapers/sverige43.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); */
-  background-size: cover;
-  background-position: center;
-  height: 160px;
-}
-
-@media (min-width: 768px) {
-  .terms-hero {
-    height: 240px;
-  }
-}
-
-.terms-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.terms-hero-logo {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 12px;
-}
-
-.terms-hero-title {
-  color: #ffffff;
-  font-size: 1.875rem;
-  font-weight: 700;
-  margin: 0;
+  background-color: transparent;
 }
 
 @media (min-width: 768px) {
@@ -75,8 +66,9 @@ body {
 }
 
 .terms-container {
-  max-width: 960px;
-  margin: 0 auto;
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
   padding: 2rem 1rem;
   background-color: transparent;
 }

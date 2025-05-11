@@ -23,6 +23,8 @@ const resources = {
       'notFound.title': 'Page Not Found',
       'notFound.message': 'The page you are looking for does not exist.',
       'notFound.button': 'Go Home',
+      'terms.title': 'Terms and Conditions',
+      'terms.closeAndGoBack': 'Close and go back',
     }
   },
   sv: {
@@ -45,6 +47,8 @@ const resources = {
       'notFound.title': 'Sidan hittades inte',
       'notFound.message': 'Sidan du letar efter finns inte.',
       'notFound.button': 'Gå hem',
+      'terms.title': 'Allmänna villkor',
+      'terms.closeAndGoBack': 'Stäng och gå tillbaka',
     }
   }
 };
