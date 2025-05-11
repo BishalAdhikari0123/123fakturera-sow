@@ -42,9 +42,7 @@ body {
   height: 50px;
   cursor: pointer;
   color:  white;
-  
 }
-
 
 .terms-page {
   display: flex;
@@ -174,3 +172,50 @@ body {
   color: var(--gray-600);
 }
 
+/* Hamburger Menu Styles */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hamburger-menu div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.navbar {
+  display: flex;
+  gap: 1rem;
+  /* Add other styles as needed */
+}
+
+.navbar.open {
+  display: block;
+  position: absolute;
+  top: 60px; /* Adjust according to your header's height */
+  right: 10px;
+  background-color: #333;
+  padding: 1rem;
+  border-radius: 8px;
+  z-index: 999;
+}
+
+@media (max-width: 1200px) {
+  .navbar {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .navbar.open {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

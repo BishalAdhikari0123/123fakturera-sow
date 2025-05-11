@@ -12,6 +12,7 @@ import termsRoutes from './routes/terms.js';
 import productsRoutes from './routes/products.js';
 import translationsRoutes from './routes/translations.js';
 import sequelize from './config/database.js';
+import imgRouter from './routes/imgRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -33,23 +34,7 @@ app.use('/api/terms', termsRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/translations', translationsRoutes);
 
-// ✅ Proxy route for flag images
-app.get('/proxy-flag/:code', async (req, res) => {
-  const { code } = req.params;
-  const imageUrl = `https://storage.123fakturere.no/public/flags/${code}.png`;
-
-  try {
-    const response = await axios.get(imageUrl, {
-      responseType: 'arraybuffer',
-    });
-
-    res.set('Content-Type', 'image/png');
-    res.send(response.data);
-  } catch (err) {
-    console.error('Image fetch error:', err.message);
-    res.status(500).send('Error fetching image');
-  }
-});
+app.use('/',imgRouter);
 
 // Serve frontend
 const __filename = fileURLToPath(import.meta.url);
