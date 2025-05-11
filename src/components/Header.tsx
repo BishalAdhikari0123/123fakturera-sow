@@ -55,11 +55,10 @@ const Header = ({ showSidebar = false, userName = "John Andre", companyName = "S
           >
             <span className="language-text">{t('language')}</span>
            <img
-            src={`/proxy-flag/${i18n.language === 'en' ? 'GB' : 'SE'}`} // Dynamically using proxy-flag based on the language
+            src={`/proxy-flag/${i18n.language === 'en' ? 'GB' : 'SE'}`}
             alt={i18n.language === 'en' ? 'English' : 'Svenska'}
             className="language-flag"
             />
-
 
           </button>
         </div>
