@@ -2,7 +2,7 @@
 
 :root {
   --text-secondary: var(--gray-500);
-  --shadow-default: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-default: 0 1px 3px 3px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 .sticky-header {
   position: sticky;
@@ -22,6 +22,7 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  padding-right: 5%;
 }
 
 .price-list-main {
@@ -86,6 +87,7 @@
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+  
 }
 .header-with-arrow{
   display: flex;
@@ -106,18 +108,20 @@
   font-size: 0.875rem;
   padding: 0 0.75rem;
   border-radius: 0.5rem;
-  box-shadow: var(--shadow-default);
+  /* box-shadow: var(--shadow-default); */
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
   flex-direction: row-reverse;
+  
 }
 
 .btn-primary-pl {
   background-color: white;
-  color: var(--primary-500);
-  border: 1px solid var(--primary-500);
+  color: rgb(117, 116, 116);
+  border: 0px solid var(--primary-500);
   display: flex;
+  box-shadow: var(--shadow-default)!important;
 }
 
 .btn-primary-pl:hover {
@@ -145,7 +149,7 @@
 .price-list-table-container {
   background-color: white;
   border-radius: 0.5rem;
-  box-shadow: var(--shadow-default);
+  /* box-shadow: var(--shadow-default); */
   overflow-x: auto;
   max-height: 70vh;
   overflow-y: auto;

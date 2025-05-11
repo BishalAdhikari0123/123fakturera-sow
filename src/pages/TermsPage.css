@@ -1,4 +1,4 @@
-/* Root & Page Layout */
+/* Root & Layout */
 :root {
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
@@ -7,58 +7,59 @@
   --gray-900: #111827;
   --primary-500: #3b82f6;
   --red-500: #ef4444;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: var(--gray-50);
+  font-family: var(--font-sans);
+  background-image: url('https://storage.123fakturera.se/public/wallpapers/sverige43.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
   margin: 0;
   padding: 0;
+  background-color: transparent;
 }
 
 .terms-page {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Hero Banner */
+/* Hero Section */
 .terms-hero {
+  position: relative;
+  /* background-image: url('https://storage.123fakturera.se/public/wallpapers/sverige43.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); */
   background-size: cover;
   background-position: center;
-  height: 10rem;
-  position: relative;
+  height: 160px;
 }
 
 @media (min-width: 768px) {
   .terms-hero {
-    height: 15rem;
+    height: 240px;
   }
 }
 
 .terms-hero-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.terms-hero-content {
   text-align: center;
 }
 
 .terms-hero-logo {
-  width: 3.5rem;
-  height: 3.5rem;
-  margin: 0 auto 0.75rem;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 12px;
 }
 
 .terms-hero-title {
-  color: white;
+  color: #ffffff;
   font-size: 1.875rem;
-  font-weight: bold;
+  font-weight: 700;
+  margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -68,40 +69,39 @@ body {
 }
 
 /* Main Content */
+.terms-main {
+  background-color: transparent;
+  flex: 1;
+}
+
 .terms-container {
-  max-width: 56rem;
+  max-width: 960px;
   margin: 0 auto;
   padding: 2rem 1rem;
+  background-color: transparent;
 }
 
 .terms-content-wrapper {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-              0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .terms-content-wrapper {
-    padding: 2rem;
-  }
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .terms-loading {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: 3rem 0;
 }
 
 .terms-spinner {
-  animation: spin 1s linear infinite;
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 50%;
   border: 2px solid transparent;
   border-bottom-color: var(--primary-500);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -116,44 +116,40 @@ body {
   padding: 2rem 0;
 }
 
-/* Terms Content Typography */
-.terms-content {
+/* Typography */
+.prose {
+  color: var(--gray-900);
+  line-height: 1.7;
+  font-size: 1rem;
   max-width: none;
 }
 
-/* Prose Typography */
-.prose {
-  max-width: 65ch;
-  color: var(--gray-900);
-  line-height: 1.6;
+.prose h1,
+.prose h2 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .prose h1 {
   font-size: 2.25rem;
   margin-top: 0;
-  margin-bottom: 1rem;
-  font-weight: 800;
-  line-height: 1.1;
 }
 
 .prose h2 {
   font-size: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  line-height: 1.3;
 }
 
 .prose p {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .prose ul {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-  padding-left: 1.625rem;
-  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .prose li {
@@ -161,16 +157,15 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Optional: Link styling for fallback content */
 .prose a {
   color: var(--primary-500);
   text-decoration: underline;
 }
 
-/* Responsive typography tweaks */
+/* Responsive Typography */
 @media (max-width: 640px) {
   .prose h1 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
 
   .prose h2 {
@@ -182,14 +177,7 @@ body {
 .terms-footer {
   background-color: var(--gray-100);
   border-top: 1px solid var(--gray-200);
-  padding: 1.5rem 0;
-  margin-top: auto;
-}
-
-.terms-footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
   color: var(--gray-600);
 }
