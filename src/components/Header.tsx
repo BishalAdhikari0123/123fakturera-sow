@@ -55,10 +55,11 @@ const Header = ({ showSidebar = false, userName = "John Andre", companyName = "S
           >
             <span className="language-text">{t('language')}</span>
            <img
-              src={`https://storage.123fakturere.no/public/flags/${i18n.language === 'en' ? 'GB' : 'SE'}.png`}
-               alt={i18n.language === 'en' ? 'English' : 'Svenska'}
-               className="language-flag"
+            src={`/proxy-flag/${i18n.language === 'en' ? 'GB' : 'SE'}`} // Dynamically using proxy-flag based on the language
+            alt={i18n.language === 'en' ? 'English' : 'Svenska'}
+            className="language-flag"
             />
+
 
           </button>
         </div>
