@@ -1,6 +1,5 @@
 import express from 'express';
-import { getFlagImage } from '../controllers/imgController.js';
-import getWallpaperImage from '../controllers/imgController.js';
+import { getFlagImage, getWallpaperImage } from '../controllers/imgController.js';
 
 const imgRouter = express.Router();
 

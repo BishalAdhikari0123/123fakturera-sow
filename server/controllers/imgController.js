@@ -1,4 +1,4 @@
-import { fetchFlagImage } from '../services/imgService.js';
+import { fetchFlagImage,fetchWallpaperImage} from '../services/imgService.js';
 
 export const getFlagImage = async (req, res) => {
   const { code } = req.params;
