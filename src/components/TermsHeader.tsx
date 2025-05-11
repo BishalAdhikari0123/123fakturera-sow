@@ -57,15 +57,15 @@ const Header = () => {
             </div>
           )}
           {i18n.language !== 'sv' && (
-            <div className="lang-option" onClick={() => changeLanguage('sv')}>
-              <span>Svenska</span>
-              <img
-                src="https://storage.123fakturere.no/public/flags/SE.png"
-                alt="Svenska"
-                className="language-flag"
-              />
-            </div>
-          )}
+    <div className="lang-option" onClick={() => changeLanguage('sv')}>
+      <span>Svenska</span>
+      <img
+        src={`/proxy-flag/SE`} 
+        alt="Svenska"
+        className="language-flag"
+      />
+    </div>
+  )}
         </div>
       </div>
 
