@@ -56,7 +56,7 @@ i18n
     lng: 'en',
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false, // React already safes from XSS
+      escapeValue: false,
     },
     react: {
       useSuspense: false,

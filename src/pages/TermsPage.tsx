@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Header from '../components/Header';
+import TermsHeader from '../components/TermsHeader';
 import { getTerms } from '../utils/api';
 import './TermsPage.css';
 
@@ -34,7 +34,7 @@ const TermsPage = () => {
 
   return (
     <div className="terms-page">
-      <Header />
+      <TermsHeader />
       <main className="terms-main">
         <div className="terms-hero">
           <div className="terms-hero-overlay">

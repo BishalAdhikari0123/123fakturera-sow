@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import path from 'path';
+import axios from 'axios';
 import { fileURLToPath } from 'url';
 
 import { requestLogger } from './middleware/requestLogger.js';
@@ -31,6 +32,24 @@ app.use(requestLogger);
 app.use('/api/terms', termsRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/translations', translationsRoutes);
+
+// ✅ Proxy route for flag images
+app.get('/proxy-flag/:code', async (req, res) => {
+  const { code } = req.params;
+  const imageUrl = `https://storage.123fakturere.no/public/flags/${code}.png`;
+
+  try {
+    const response = await axios.get(imageUrl, {
+      responseType: 'arraybuffer',
+    });
+
+    res.set('Content-Type', 'image/png');
+    res.send(response.data);
+  } catch (err) {
+    console.error('Image fetch error:', err.message);
+    res.status(500).send('Error fetching image');
+  }
+});
 
 // Serve frontend
 const __filename = fileURLToPath(import.meta.url);
