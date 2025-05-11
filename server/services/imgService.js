@@ -1,14 +1,14 @@
-import { fetchFlagImage } from '../services/imgService.js';
+import axios from 'axios';
 
-export const getFlagImage = async (req, res) => {
-  const { code } = req.params;
+export const fetchFlagImage = async (code) => {
+  const imageUrl = `https://storage.123fakturere.no/public/flags/${code}.png`;
 
-  try {
-    const { data, contentType } = await fetchFlagImage(code);
-    res.set('Content-Type', contentType);
-    res.send(data);
-  } catch (err) {
-    console.error('Image fetch error:', err.message);
-    res.status(500).send('Error fetching image');
-  }
+  const response = await axios.get(imageUrl, {
+    responseType: 'arraybuffer',
+  });
+
+  return {
+    data: response.data,
+    contentType: 'image/png',
+  };
 };
