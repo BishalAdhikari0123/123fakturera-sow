@@ -12,3 +12,15 @@ export const getFlagImage = async (req, res) => {
     res.status(500).send('Error fetching image');
   }
 };
+export const getWallpaperImage = async (req, res) => {
+  const { file } = req.params;
+
+  try {
+    const { data, contentType } = await fetchWallpaperImage(file);
+    res.set('Content-Type', contentType);
+    res.send(data);
+  } catch (err) {
+    console.error('Wallpaper image fetch error:', err.message);
+    res.status(500).send('Error fetching wallpaper image');
+  }
+};

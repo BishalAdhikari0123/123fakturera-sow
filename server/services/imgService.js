@@ -12,3 +12,20 @@ export const fetchFlagImage = async (code) => {
     contentType: 'image/png',
   };
 };
+
+export const fetchWallpaperImage = async (file) => {
+  const imageUrl = `https://storage.123fakturera.se/public/wallpapers/${file}`;
+
+  try {
+    const response = await axios.get(imageUrl, {
+      responseType: 'arraybuffer',
+    });
+
+    return {
+      data: response.data,
+      contentType: 'image/jpeg',
+    };
+  } catch (err) {
+    throw new Error('Error fetching wallpaper image');
+  }
+};

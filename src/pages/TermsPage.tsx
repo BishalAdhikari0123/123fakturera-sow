@@ -42,9 +42,18 @@ const TermsPage = () => {
   };
 
   return (
-    <div className="terms-page">
+    <div
+      className="terms-page"
+      style={{
+        backgroundImage: 'url(/proxy-flag/sverige43.jpg)',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'auto',
+        backgroundPosition: 'center top',
+      }}
+    >
       <TermsHeader />
-      
+
       {/* Hamburger Button */}
       <div className="hamburger-menu" onClick={toggleMenu}>
         <div></div>
