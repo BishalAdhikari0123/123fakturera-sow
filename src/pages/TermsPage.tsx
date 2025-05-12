@@ -43,13 +43,6 @@ const TermsPage = () => {
 
   return (
     <div className="terms-page">
-      {/* Wallpaper Image as Background */}
-      <img
-        src="/api/images/wallpapers"
-        alt="Wallpaper"
-        className="wallpaper-image"
-      />
-
       <TermsHeader />
 
       <div className="hamburger-menu" onClick={toggleMenu}>

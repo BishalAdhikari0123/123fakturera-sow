@@ -29,7 +29,7 @@ const Header = () => {
         ) : (
           <Link to="/" className="header-logo">
             <img
-              src="https://storage.123fakturera.se/public/icons/diamond.png"
+              src="/app-icon/diamond.png"
               alt="123Fakturera Logo"
             />
           </Link>
@@ -50,22 +50,22 @@ const Header = () => {
             <div className="lang-option" onClick={() => changeLanguage('en')}>
               <span>English</span>
               <img
-  src={`/proxy-flag/${i18n.language === 'en' ? 'GB' : 'SE'}`}
-  alt={i18n.language === 'en' ? 'English' : 'Svenska'}
-  className="language-flag"
-/>
+                src="/flag-images/GB.png"
+                alt="English"
+                className="language-flag"
+              />
             </div>
           )}
           {i18n.language !== 'sv' && (
-    <div className="lang-option" onClick={() => changeLanguage('sv')}>
-      <span>Svenska</span>
-      <img
-        src={`/proxy-flag/SE`} 
-        alt="Svenska"
-        className="language-flag"
-      />
-    </div>
-  )}
+            <div className="lang-option" onClick={() => changeLanguage('sv')}>
+              <span>Svenska</span>
+              <img
+                src="/flag-images/SE.png"
+                alt="Svenska"
+                className="language-flag"
+              />
+            </div>
+          )}
         </div>
       </div>
 

@@ -20,12 +20,14 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-image: url('/background-image/background.png');
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
   background-color: transparent;
 }
+
 
 .terms-header-section {
   display: flex;
