@@ -11,3 +11,15 @@ export const getTermsByLanguage = async (language) => {
     throw new Error('Error fetching terms: ' + error.message);
   }
 };
+
+export const saveTerms = async (language, content) => {
+  try {
+    const newTerms = await Terms.create({
+      language,
+      content,
+    });
+    return newTerms;
+  } catch (error) {
+    throw new Error('Error saving terms: ' + error.message);
+  }
+};
