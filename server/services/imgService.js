@@ -14,7 +14,7 @@ export const fetchFlagImage = async (code) => {
 };
 
 export const fetchWallpaperImage = async (file) => {
-  const imageUrl = `https://storage.123fakturera.se/public/wallpapers/${file}`;
+  const imageUrl = `https://storage.123fakturera.se/public/wallpapers/sverige43.jpg`;
 
   try {
     const response = await axios.get(imageUrl, {

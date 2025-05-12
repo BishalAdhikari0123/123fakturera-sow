@@ -19,14 +19,14 @@ const TermsPage = () => {
         setTermsContent(data.content);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load terms content');
-        setLoading(false);
         console.error('Error fetching terms:', err);
+        setError('Failed to load terms content');
         const fallbackContent =
           i18n.language === 'en'
             ? `<h1>Terms and Conditions</h1><p>... (English content)</p>`
             : `<h1>Allmänna villkor</h1><p>... (Swedish content)</p>`;
         setTermsContent(fallbackContent);
+        setLoading(false);
       }
     };
 
@@ -42,26 +42,22 @@ const TermsPage = () => {
   };
 
   return (
-    <div
-      className="terms-page"
-      style={{
-        backgroundImage: 'url(/proxy-flag/sverige43.jpg)',
-        backgroundAttachment: 'fixed',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'auto',
-        backgroundPosition: 'center top',
-      }}
-    >
+    <div className="terms-page">
+      {/* Wallpaper Image as Background */}
+      <img
+        src="/api/images/wallpapers"
+        alt="Wallpaper"
+        className="wallpaper-image"
+      />
+
       <TermsHeader />
 
-      {/* Hamburger Button */}
       <div className="hamburger-menu" onClick={toggleMenu}>
         <div></div>
         <div></div>
         <div></div>
       </div>
 
-      {/* Navbar */}
       <div className={`navbar ${isMenuOpen ? 'open' : ''}`}>
         <button className="go-back-button" onClick={handleGoBack}>
           {t('terms.closeAndGoBack')}

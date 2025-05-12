@@ -34,7 +34,7 @@ app.use('/api/terms', termsRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/translations', translationsRoutes);
 
-app.use('/',imgRouter);
+app.use('/api/images/',imgRouter);
 
 // Serve frontend
 const __filename = fileURLToPath(import.meta.url);
