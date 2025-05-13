@@ -1,32 +1,67 @@
-# 123fakturera Clone
+# 📄 123fakturera Clone
 
-This project is a clone of the 123fakturera website's terms and conditions page and a simple price list page. It was developed using React.js, Vite, and a Node.js backend. The frontend uses plain CSS for styling, having initially utilized Tailwind CSS.
+This project is a responsive clone of the [123fakturera](https://online.123fakturera.se/terms/) website's **Terms and Conditions** and **Price List** pages, built using **React.js (with Vite)** for the frontend and **Node.js (with Express)** for the backend. PostgreSQL is used as the primary database.
 
-## Features
+> Initially styled with Tailwind CSS, the project now uses plain CSS for flexibility and custom responsiveness.
 
-1. **Terms and Conditions Page**:
-   - Mimics the design and functionality of [123fakturera Terms and Conditions](https://online.123fakturera.se/terms/).
-   - The page includes a responsive layout supporting mobile portrait, landscape, tablet, and desktop views.
-   - Texts in English and Swedish are pulled from a PostgreSQL database.
+---
 
-2. **Price List Page**:
-   - Displays a list of products with fields like Product/Service, In Price, Price, etc.
-   - Data is pulled from a PostgreSQL database and can be edited directly on the page.
-   - The page supports scrolling for a large number of products (at least 20 rows for testing).
-   - The layout adjusts for different screen sizes (desktop, tablet, mobile).
+## ✨ Features
 
-3. **Responsive Design**:
-   - Full responsiveness across mobile portrait, mobile landscape, tablet, and desktop resolutions.
-   - Hamburger menu functionality for mobile views.
+### ✅ Terms and Conditions Page
+- Fully responsive replica of the original site’s `/terms` page.
+- Supports both **English** and **Swedish** languages.
+- Content is **dynamically loaded** from a PostgreSQL database.
+- Loading spinner added for data-fetching states.
 
-4. **Backend**:
-   - Built using Node.js and Express.
-   - Data is served from a PostgreSQL database, designed to hold both the terms and conditions texts and price list data.
+### 💰 Price List Page
+- Editable table of **Products and Services**.
+- Includes fields like:
+  - Product/Service 
+  - In Price 
+  - Price
+  - Stock 
+- Minimum of **20 sample rows** with scroll support.
+- Designed to simulate real-time inline editing with backend persistence.
 
-## Setup
+### 📱 Responsive Design
+- Optimized for:
+  - 📳 Mobile Portrait and Landscape
+  - 📱 Tablet
+  - 🖥 Desktop
+- Hamburger menu support for smaller screens.
 
-### Prerequisites
+### ⚙️ Backend (Express)
+- REST API built with **Node.js** and **Express**.
+- Connects to a **PostgreSQL** database.
+- Provides routes to fetch:
+  - Terms and Conditions
+  - Price List items
 
-- Node.js (version 18 or higher recommended)
-- PostgreSQL (for backend database)
+---
+
+## 🔧 Technologies Used
+
+- **Frontend**: React.js + Vite, CSS
+- **Backend**: Node.js, Express.js
+- **Database**: PostgreSQL
+- **Hosting**: Render.com
+
+---
+
+
+---
+
+## ⚙️ Environment Variables
+
+
+```env
+
+# Backend
+PORT=4000
+DB_HOST=your-db-hostname.render.com
+DB_PORT=5432    
+DB_USER=your_db_user
+DB_PASSWORD=your_secure_password
+DB_NAME=your_db_name
 
