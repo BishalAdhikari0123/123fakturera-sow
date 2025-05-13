@@ -15,7 +15,7 @@ This project is a responsive clone of the [123fakturera](https://online.123faktu
 - Loading spinner added for data-fetching states.
 
 ### 💰 Price List Page
-- Editable table of **Products and Services**.
+- Editable table.
 - Includes fields like:
   - Product/Service 
   - In Price 
@@ -23,6 +23,7 @@ This project is a responsive clone of the [123fakturera](https://online.123faktu
   - Stock 
 - Minimum of **20 sample rows** with scroll support.
 - Designed to simulate real-time inline editing with backend persistence.
+- Used translations, which translates the table headers and menu header.
 
 ### 📱 Responsive Design
 - Optimized for:
