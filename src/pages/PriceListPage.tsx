@@ -44,9 +44,10 @@ const EditableCell = ({
   />
 ) : (
   <div onClick={onClick} className="editable-cell">
-    {value}
+    {value.length > 50 ? value.slice(0, 47) + '...' : value}
   </div>
 );
+
 
 const PriceListPage = () => {
   const { t } = useTranslation();
@@ -71,9 +72,12 @@ const PriceListPage = () => {
   }, []);
 
   const startEditing = (id: number, field: string, value: string) => {
-    setEditing({ id, field, value });
-    setSelectedCell({ rowId: id, field });
-  };
+  if (editing.id !== null && (editing.id !== id || editing.field !== field)) {
+    saveChanges();
+  }
+  setEditing({ id, field, value });
+  setSelectedCell({ rowId: id, field });
+};
 
   const saveChanges = async () => {
     const { id, field, value } = editing;
@@ -199,10 +203,11 @@ if (["articleNo", "productService", "price", "unit", "inStock", "inPrice", "desc
 
   return (
     <td
-      key={field}
-      className={`${className} ${selectedCell?.rowId === p.id && selectedCell?.field === field ? 'selected-cell' : ''}`}
-      onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-    >
+  key={field}
+  className={`${className} ${['productService', 'description'].includes(field) ? 'truncate-cell' : ''} ${selectedCell?.rowId === p.id && selectedCell?.field === field ? 'selected-cell' : ''}`}
+  onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+>
+
       <EditableCell
         value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
         isEditing={editing.id === p.id && editing.field === field}

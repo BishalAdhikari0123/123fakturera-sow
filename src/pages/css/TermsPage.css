@@ -42,7 +42,7 @@ body {
 }
 
 .go-back-button {
-  background-color: rgb(8, 148, 8);
+  background-color: rgb(20, 158, 10);
   padding: 0.75rem 2rem;
   border-radius: 30px;
   width: 100%;
@@ -62,18 +62,14 @@ body {
 }
 
 .terms-container {
-  width: 85%;
-  max-width: 800px;
-  margin: auto;
+  width: 80%;
+  max-width: 750px;
+  margin: 2.5rem auto;
   padding: 1.5rem 1rem;
+  background-color: #f3f4f6;
+  border-radius: 1.5rem;
 }
 
-.terms-content-wrapper {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 2.25rem;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-}
 
 .terms-loading {
   display: flex;
@@ -147,13 +143,6 @@ body {
   text-decoration: underline;
 }
 
-.terms-footer {
-  background-color: var(--gray-100);
-  border-top: 1px solid var(--gray-200);
-  padding: 1.5rem 1rem;
-  text-align: center;
-  color: var(--gray-600);
-}
 
 .navbar {
   display: flex;

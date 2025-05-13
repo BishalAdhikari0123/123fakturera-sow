@@ -254,6 +254,14 @@ table th.action-cell {
   display: table-cell;
 }
 
+.truncate-cell {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
 @media (max-width: 1024px) {
   .price-list-actions {
     flex-direction: column;
