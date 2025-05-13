@@ -11,23 +11,24 @@
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
 }
 
 .menu-button {
   color: white;
   padding: 0.25rem;
-  display: block;
+  display: none;
 }
 
 .menu-button:focus {
   outline: none;
 }
 
+/* Hide user info by default */
 .user-info {
   display: none;
 }
 
+/* Show user info for larger screens (above 768px) */
 @media (min-width: 768px) {
   .user-info {
     display: flex;
@@ -36,6 +37,7 @@
   }
 }
 
+/* Display the user avatar, name, etc. */
 .user-avatar {
   height: 2.5rem;
   width: 2.5rem;
@@ -176,8 +178,26 @@
   background-color: var(--gray-100);
 }
 
-@media (min-width: 1024px) {
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  /* Hide user-info when screen is below 768px */
+  .user-info {
+    display: none !important;
+  }
+
+  /* Show the hamburger menu button when screen is below 768px */
   .menu-button {
-    display: none;
+    display: block !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Make sure the user-info stays hidden and menu button is displayed on tablets */
+  .user-info {
+    display: none !important;
+  }
+
+  .menu-button {
+    display: block !important;
   }
 }

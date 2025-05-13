@@ -155,18 +155,20 @@ const PriceListPage = () => {
                     <tr>
                       <th className="arrow-column"></th>
                       {["articleNo", "product", "inPrice", "price", "unit", "inStock", "description"].map((key) => {
-                        let className = "desktop-only";
-                        if (["product", "price"].includes(key)) className = "mobile-visible";
-                        else if (["unit", "inStock"].includes(key)) className = "tablet-visible";
-                        return (
-                          <th key={key} className={className}>
-                            <div className="header-with-arrow">
-                              {t(`pricelist.${key}`)}
-                              {selectedCell?.field === key && <ArrowDown size={16} className="column-arrow" />}
-                            </div>
-                          </th>
-                        );
-                      })}
+  let className = "desktop-only";
+  if (["product", "price"].includes(key)) className = "mobile-visible";
+  else if (["unit", "inStock"].includes(key)) className = "tablet-visible";
+  if (["inPrice", "description"].includes(key)) className += " hide-on-ipad"; 
+  return (
+    <th key={key} className={className}>
+      <div className="header-with-arrow">
+        {t(`pricelist.${key}`)}
+        {selectedCell?.field === key && <ArrowDown size={16} className="column-arrow" />}
+      </div>
+    </th>
+  );
+})}
+
                       <th className="mobile-visible"></th>
                     </tr>
                   </thead>
@@ -178,26 +180,41 @@ const PriceListPage = () => {
                         </td>
 
                         {["articleNo", "productService", "inPrice", "price", "unit", "inStock", "description"].map((field) => {
-                          let className = "desktop-only";
-                          if (["productService", "price"].includes(field)) className = "mobile-visible";
-                          else if (["unit", "inStock"].includes(field)) className = "tablet-visible";
-                          return (
-                            <td
-                              key={field}
-                              className={`${className} ${selectedCell?.rowId === p.id && selectedCell?.field === field ? 'selected-cell' : ''}`}
-                              onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-                            >
-                              <EditableCell
-                                value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
-                                isEditing={editing.id === p.id && editing.field === field}
-                                onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
-                                onChange={(e) => setEditing({ ...editing, value: e.target.value })}
-                                onBlur={saveChanges}
-                                onKeyDown={handleKeyDown}
-                              />
-                            </td>
-                          );
-                        })}
+  
+  let className = "";
+
+if (["articleNo", "productService", "price", "unit", "inStock", "inPrice", "description"].includes(field)) {
+  className = "desktop-only"; // Default for desktop
+
+  if (["productService", "price"].includes(field)) {
+    className = "mobile-visible";
+  } else if (["unit", "inStock"].includes(field)) {
+    className = "tablet-visible";
+  }
+
+  if (["inPrice", "description"].includes(field)) {
+    className += " hide-on-ipad"; // Add for iPad
+  }
+}
+
+  return (
+    <td
+      key={field}
+      className={`${className} ${selectedCell?.rowId === p.id && selectedCell?.field === field ? 'selected-cell' : ''}`}
+      onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+    >
+      <EditableCell
+        value={editing.id === p.id && editing.field === field ? editing.value : String(p[field as keyof Product])}
+        isEditing={editing.id === p.id && editing.field === field}
+        onClick={() => startEditing(p.id, field, String(p[field as keyof Product]))}
+        onChange={(e) => setEditing({ ...editing, value: e.target.value })}
+        onBlur={saveChanges}
+        onKeyDown={handleKeyDown}
+      />
+    </td>
+  );
+})}
+
                         <td className="action-cell mobile-visible">
                           <button className="action-button">
                             <MoreHorizontal size={18} />

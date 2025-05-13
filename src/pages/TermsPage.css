@@ -191,29 +191,3 @@ body {
   }
 }
 
-/* 👨‍💻 Tablet-specific customization for article/product/price/stock/unit */
-@media (min-width: 641px) and (max-width: 768px) {
-  .terms-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .terms-content-wrapper > * {
-    display: none !important;
-  }
-
-  .terms-content-wrapper .article,
-  .terms-content-wrapper .product,
-  .terms-content-wrapper .price,
-  .terms-content-wrapper .stock,
-  .terms-content-wrapper .unit {
-    display: block !important;
-  }
-
-  .terms-content-wrapper .article { order: 1; }
-  .terms-content-wrapper .product { order: 2; }
-  .terms-content-wrapper .price { order: 3; }
-  .terms-content-wrapper .stock { order: 4; }
-  .terms-content-wrapper .unit { order: 5; }
-}
