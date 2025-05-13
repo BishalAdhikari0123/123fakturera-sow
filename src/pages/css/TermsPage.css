@@ -24,10 +24,10 @@ body {
   background-image: url('/background-image/background.png');
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 110% 110%;
   background-position: center top;
   background-color: transparent;
-  transition: background-size 0.1s ease-out;
+  transition: background-size 0.2s ease-out;
   overflow: hidden;
 }
 
