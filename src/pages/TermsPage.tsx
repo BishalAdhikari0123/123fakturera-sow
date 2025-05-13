@@ -9,7 +9,6 @@ const TermsPage = () => {
   const [termsContent, setTermsContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const fetchTerms = async () => {
@@ -37,29 +36,19 @@ const TermsPage = () => {
     window.history.back();
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
   return (
     <div className="terms-page">
       <TermsHeader />
 
-      <div className="hamburger-menu" onClick={toggleMenu}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-
-      <div className={`navbar ${isMenuOpen ? 'open' : ''}`}>
-        <button className="go-back-button" onClick={handleGoBack}>
-          {t('terms.closeAndGoBack')}
-        </button>
-      </div>
-
       <main className="terms-main">
         <div className="terms-header-section">
           <h2>{t('terms.title')}</h2>
+        </div>
+
+        <div className="navbar">
+          <button className="go-back-button" onClick={handleGoBack}>
+            {t('terms.closeAndGoBack')}
+          </button>
         </div>
 
         <div className="terms-container">
