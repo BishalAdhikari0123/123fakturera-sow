@@ -22,7 +22,6 @@ body {
   background-size: auto 120%;
   background-position: center -30px;   
   background-color: rgb(18, 173, 250);
-
   transition: background-size 0.2s ease-out, background-position 0.2s ease-out;
 }
 html::before {
@@ -192,7 +191,7 @@ html::before {
 }
 .go-back-bottom{
   margin-top: 2.5rem;
-  margin-bottom: -2.5rem;
+  margin-bottom: 2.5rem;
   
 }
 
