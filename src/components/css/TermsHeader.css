@@ -47,8 +47,9 @@
 .mobile-nav {
   position: absolute;
   top: 70px;
-  left: 1rem;
+  left: 8rem;
   right: 1rem;
+  width:50%;
   background-color: white;
   padding: 1rem;
   border-radius: 8px;

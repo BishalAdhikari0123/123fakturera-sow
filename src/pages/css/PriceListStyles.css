@@ -20,6 +20,7 @@
   display: flex;
   flex: 1;
   flex-direction: row;
+  margin-right: 3rem;
 }
 
 .price-list-main {
@@ -117,6 +118,7 @@
   border: 0px solid var(--primary-500);
   display: flex;
   box-shadow: var(--shadow-default) !important;
+  margin-right: 1rem;
 }
 
 .btn-primary-pl:hover {
