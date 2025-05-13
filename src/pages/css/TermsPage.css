@@ -15,7 +15,7 @@ body {
   padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
-
+  height: 140vh;
   background-image: url('/background-image/background.png');
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -85,7 +85,7 @@ html::before {
 }
 
 .terms-container {
-  width: 80%;
+  width: 85%;
   max-width: 750px;
   margin: 2.5rem auto;
   padding: 1.5rem 1rem;
