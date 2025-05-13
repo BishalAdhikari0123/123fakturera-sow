@@ -6,17 +6,18 @@ import './Sidebar.css';
 const Sidebar = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  
+
   const isActive = (path: string) => {
     return location.pathname === path;
   };
-  
+
   const menuItems = [
     { icon: FileText, label: 'Invoices', path: '/invoices' },
     { icon: Users, label: 'Customers', path: '/customers' },
     { icon: Settings, label: 'My Business', path: '/business' },
     { icon: FileSpreadsheet, label: 'Invoice Journal', path: '/journal' },
     { icon: PackageCheck, label: 'Price List', path: '/' },
+    { icon: FileWarning, label: 'Terms', path: '/terms' }, 
     { icon: FileWarning, label: 'Multiple Invoicing', path: '/multiple' },
     { icon: FileWarning, label: 'Unpaid Invoices', path: '/unpaid' },
     { icon: Presentation, label: 'Offer', path: '/offer' },
@@ -24,6 +25,7 @@ const Sidebar = () => {
     { icon: Users2, label: 'Member Invoicing', path: '/member' },
     { icon: FileImport, label: 'Import/Export', path: '/importexport' },
     { icon: LogOut, label: 'Log out', path: '/logout' },
+    
   ];
 
   return (

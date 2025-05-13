@@ -3,49 +3,42 @@
   padding: 1rem 2rem;
   display: flex;
   justify-content: center;
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 80%;
   max-width: 1200px;
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   position: relative;
 }
 
 .header-logo img {
-  width: 60px;
+  width: 56px;
 }
 
-/* Nav links */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-right: -20rem; 
+}
+
 .header-nav a {
-  margin: 1.5rem;
+  font-size: 16px;
+  margin: 0px 0.1rem; 
+  padding: 0.8rem 0.8rem;
   text-decoration: none;
-  color: #e7e4e4;
+  color: #ffffff;
   font-weight: 500;
 }
 
-/* Hide nav on small screens */
-@media (max-width: 1200px) {
-  .header-nav {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .header-logo {
-    display: none;
-  }
-}
-
-/* Hamburger */
+/* Hamburger icon */
 .hamburger {
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   color: white;
   display: none;
@@ -76,24 +69,78 @@
   text-decoration: underline;
 }
 
-/* Language switcher */
+/* Language switcher (always on the right) */
+.lang-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
 .lang-option {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem; 
   color: white;
   cursor: pointer;
+  user-select: none;
+  font-size: 1.1rem; 
 }
 
+.lang-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 6px;
+  margin-top: 0.3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  z-index: 1000;
+  padding: 0.5rem 0;
+}
+
+.lang-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lang-menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Language flag styling */
 .language-flag {
-  width: 30px;
-  height: 20px;
+  width: 33px; 
+  height: 18px;
   border-radius: 3px;
-  border: 1px solid #ccc;
   object-fit: cover;
+  border: 1px solid #ccc;
   transition: transform 0.2s;
 }
 
 .language-flag:hover {
   transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .header-logo {
+    display: none;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .header-container {
+    justify-content: space-between;
+  }
 }

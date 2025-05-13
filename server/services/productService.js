@@ -1,4 +1,5 @@
 import Product from '../models/Product.js';
+import { Op } from 'sequelize';
 
 export const getAllProducts = async () => {
   try {
@@ -22,7 +23,6 @@ export const getProductById = async (id) => {
   }
 };
 
-import { Op } from 'sequelize'; // Ensure this is at the top if not already imported
 
 export const createProduct = async (productData) => {
   try {

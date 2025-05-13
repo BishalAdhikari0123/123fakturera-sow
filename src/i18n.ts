@@ -23,8 +23,8 @@ const resources = {
       'notFound.title': 'Page Not Found',
       'notFound.message': 'The page you are looking for does not exist.',
       'notFound.button': 'Go Home',
-      'terms.title': 'Terms and Conditions',
-      'terms.closeAndGoBack': 'Close and go back',
+      'terms.title': 'Terms',
+      'terms.closeAndGoBack': 'Close and Go Back',
     }
   },
   sv: {

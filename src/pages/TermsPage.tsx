@@ -22,7 +22,7 @@ const TermsPage = () => {
         setError('Failed to load terms content');
         const fallbackContent =
           i18n.language === 'en'
-            ? `<h1>Terms and Conditions</h1><p>... (English content)</p>`
+            ? `<h1>Terms</h1><p>... (English content)</p>`
             : `<h1>Allmänna villkor</h1><p>... (Swedish content)</p>`;
         setTermsContent(fallbackContent);
         setLoading(false);
@@ -39,18 +39,16 @@ const TermsPage = () => {
   return (
     <div className="terms-page">
       <TermsHeader />
-
       <main className="terms-main">
         <div className="terms-header-section">
           <h2>{t('terms.title')}</h2>
         </div>
 
-        <div className="navbar">
-          <button className="go-back-button" onClick={handleGoBack}>
-            {t('terms.closeAndGoBack')}
-          </button>
-        </div>
-
+      <div className="navbar">
+        <button className="go-back-button" onClick={handleGoBack}>
+          {t('terms.closeAndGoBack')}
+        </button>
+      </div>
         <div className="terms-container">
           <div className="terms-content-wrapper">
             {loading ? (
@@ -71,9 +69,12 @@ const TermsPage = () => {
         </div>
       </main>
 
-      <footer className="terms-footer">
-        <p>&copy; {new Date().getFullYear()} 123Fakturera. All rights reserved.</p>
-      </footer>
+      {/* Reuse the close button at the bottom */}
+      <div className="navbar">
+        <button className="go-back-button go-back-bottom" onClick={handleGoBack}>
+          {t('terms.closeAndGoBack')}
+        </button>
+      </div>
     </div>
   );
 };
