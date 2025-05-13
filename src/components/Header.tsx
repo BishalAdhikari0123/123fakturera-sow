@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import './Header.css';
+import './css/Header.css';
 
 interface HeaderProps {
   showSidebar?: boolean;

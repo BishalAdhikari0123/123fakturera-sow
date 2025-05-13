@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { FileText, Users, Settings, FileSpreadsheet, PackageCheck, FileWarning, Presentation, Boxes, Users2, Import as FileImport, LogOut } from 'lucide-react';
-import './Sidebar.css';
+import './css/Sidebar.css';
 
 const Sidebar = () => {
   const { t } = useTranslation();

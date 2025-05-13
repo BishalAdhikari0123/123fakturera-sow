@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TermsHeader from '../components/TermsHeader';
 import { getTerms } from '../utils/api';
-import './TermsPage.css';
+import './css/TermsPage.css';
 
 const TermsPage = () => {
   const { t, i18n } = useTranslation();

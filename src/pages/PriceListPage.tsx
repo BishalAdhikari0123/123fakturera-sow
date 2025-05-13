@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import { Search, Plus, Printer, ToggleRight, MoreHorizontal, ArrowRight, ArrowDown } from 'lucide-react';
 import { getPriceList, updateProduct } from '../utils/api';
-import './PriceListStyles.css';
+import './css/PriceListStyles.css';
 
 interface Product {
   id: number;
