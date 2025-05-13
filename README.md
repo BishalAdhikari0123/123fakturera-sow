@@ -53,6 +53,49 @@ This project is a responsive clone of the [123fakturera](https://online.123faktu
 
 ---
 
+
+## 📬 Example API Requests
+
+You can test your backend API using the following minimal request examples:
+
+---
+
+### ➕ Add a Product
+
+**Endpoint**:  
+`POST http://localhost:4002/api/products`  
+
+**Headers**:  
+`Content-Type: application/json`
+
+**Body**:
+
+```json
+{
+  "articleNo": "A1001",
+  "productService": "USB Cable",
+  "inPrice": "2",
+  "price": "5",
+  "unit": "Piece",
+  "inStock": "100",
+  "description": "1 meter USB Type-C cable"
+}
+### 📄 Save Terms (Swedish/English)
+
+**Endpoint**  
+`POST http://localhost:4002/api/terms/save-terms`
+
+**Headers**  
+`Content-Type: application/json`
+
+**Request Body**
+
+```json
+{
+  "language": "sv",
+  "termsContent": "<p>Genom att klicka på Fakturera Nu accepterar du villkoren och informationen du har angett. Du kan prova programmet gratis i 14 dagar. Därefter kostar det 99 kr/mån exkl. moms.</p>"
+}
+```
 ## ⚙️ Environment Variables
 
 
@@ -66,3 +109,6 @@ DB_USER=your_db_user
 DB_PASSWORD=your_secure_password
 DB_NAME=your_db_name
 
+
+``` 
+---
