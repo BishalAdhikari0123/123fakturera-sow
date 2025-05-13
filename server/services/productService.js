@@ -22,13 +22,43 @@ export const getProductById = async (id) => {
   }
 };
 
+import { Op } from 'sequelize'; // Ensure this is at the top if not already imported
+
 export const createProduct = async (productData) => {
   try {
-    return await Product.create(productData);
+    const { productService, price, inStock } = productData;
+
+    // Check if a product with the same productService and price already exists
+    const existingProduct = await Product.findOne({
+      where: {
+        productService,
+        price
+      }
+    });
+
+    if (existingProduct) {
+      // Update inStock by adding new stock to existing stock
+      existingProduct.inStock = parseInt(existingProduct.inStock) + parseInt(inStock);
+      await existingProduct.save();
+
+      return {
+        message: 'Product already exists. Stock updated.',
+        product: existingProduct
+      };
+    }
+
+    // If not exists, create a new product
+    const newProduct = await Product.create(productData);
+    return {
+      message: 'New product created.',
+      product: newProduct
+    };
+
   } catch (error) {
     throw new Error('Error creating product: ' + error.message);
   }
 };
+
 
 export const updateProduct = async (id, productData) => {
   try {

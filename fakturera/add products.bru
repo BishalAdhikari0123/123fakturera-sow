@@ -1,0 +1,23 @@
+meta {
+  name: add products
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:4002/api/products
+  body: json
+  auth: inherit
+}
+
+body:json {
+   {
+      "articleNo": "A1015",
+      "productService": "Gaming Headset",
+      "inPrice": "40",
+      "price": "65",
+      "unit": "Piece",
+      "inStock": "75",
+      "description": "Surround sound headset with noise-canceling mic"
+    }
+}
