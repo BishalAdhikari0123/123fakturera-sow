@@ -24,13 +24,14 @@ body {
   background-image: url('/background-image/background.png');
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-size: auto 110%;
-  background-position: center;
+  background-size: auto 120%;
+  background-position: center -30px;
   background-color: transparent;
-  transition: background-size 0.2s ease-out;
+  transition: background-size 0.2s ease-out, background-position 0.2s ease-out;
   overflow: hidden;
   z-index: -100;
 }
+
 
 .terms-header-section {
   display: flex;
